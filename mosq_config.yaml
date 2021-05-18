@@ -1,0 +1,22 @@
+#------------------------------------------#
+# Mosquito Config File		   #
+#------------------------------------------#
+
+LOGFILE_PATH: 'logs/'
+OUTPUT_DIR: 'output/'
+
+# Inputs output
+INPUTS:
+  ENVIRONMENTAL_FORCING_DIR : 'input/HPU_forcing_data'
+  HYDROPOPS : 'input/HPUs.geojson' # shapefile/geojson
+
+DUMMY:
+  MOSQ_PARAMS_STD:
+    mhi: 0.5
+    blahblah: 5
+    etc: 9
+  MOSQ_PARAMS_FITTED:
+    mhi: 0.5
+    blahblah: 5
+    etc: 9
+    
