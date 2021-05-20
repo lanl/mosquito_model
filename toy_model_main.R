@@ -12,16 +12,20 @@
 
 ### Libraries 
 library(yaml) # to read in yaml file
-library(geojsonio)
+library(geojsonio) # read geojsons
+library(logger) # logger package
 
 ### Read in Config File ####
+log_info("Read In Config")
 config_data <- yaml.load_file("mosq_config.yaml")
 
 ### Read geo_json file ####
+log_info("Read In HPUs GeoJSON")
 hpu_boundaries <- geojson_read(x = config_data$INPUTS$HYDROPOPS,what="sp")
 hpu_ids <- hpu_boundaries@data$hpu_id
 
 ### Make Dummy mosquito data for each hydropop ####
+log_info("Run Mosquito Model for each HydroPop Unit")
 for(i in hpu_ids){
   hydropop_id <- i
   forcing_data_i <- read.csv(paste0(config_data$INPUTS$ENVIRONMENTAL_FORCING_DIR,

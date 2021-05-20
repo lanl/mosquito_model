@@ -2,7 +2,7 @@
 # Mosquito Config File		   #
 #------------------------------------------#
 
-LOGFILE_PATH: 'logs/'
+LOGFILE_PATH: 'logs/mosquito_model_logs.txt'
 OUTPUT_DIR: 'output/'
 
 # Inputs output
