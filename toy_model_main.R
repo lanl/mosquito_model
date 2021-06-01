@@ -19,6 +19,10 @@ library(logger) # logger package
 log_info("Read In Config")
 config_data <- yaml.load_file("mosq_config.yaml")
 
+### Source Model Run Scripts ####
+log_info("Source Model Functions")
+source(paste0(config_data$MODEL_RUN_SCRIPTS,"/model_run.R"))
+
 ### Read geo_json file ####
 log_info("Read In HPUs GeoJSON")
 hpu_boundaries <- geojson_read(x = config_data$INPUTS$HYDROPOPS,what="sp")
@@ -32,9 +36,8 @@ for(i in hpu_ids){
                                   "/hpu_",hydropop_id,"_forcing_data.csv"))
   start_date <- min(as.Date(forcing_data_i$date))
   end_date <- max(as.Date(forcing_data_i$date))
-  
-  mosquito_vals <- scale(forcing_data_i$temp_C*forcing_data_i$precip_cm,
-                         center=FALSE)*100*hpu_boundaries$mosq_hab_index[which(hpu_boundaries@data$hpu_id==hydropop_id)]
+  MHI_i <- hpu_boundaries$mosq_hab_index[which(hpu_boundaries@data$hpu_id==hydropop_id)]
+  mosquito_vals <- mosq.model(parameters = 1,hpu_MHI = MHI_i,forcing_data = forcing_data_i)
   
   mosq_df <- data.frame(date=seq(start_date,end_date,by=1),
                         mosquito_count=mosquito_vals)
