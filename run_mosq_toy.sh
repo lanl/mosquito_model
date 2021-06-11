@@ -1,1 +1,1 @@
-Rscript toy_model_main.R &
+Rscript toy_model_main.R
