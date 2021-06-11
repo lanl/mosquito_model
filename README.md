@@ -34,3 +34,9 @@ conda install -c r r-rgdal
 ```
 
 Each one of these `conda install` will ask you to confirm y/n to proceed to install after the environment solve if you want to stop this add a `-y` or `--yes` to auto proceed. 
+
+## Running the model 
+```
+conda activate /projects/cimmid/miniconda3/mosq-R
+bash run_mosq_toy.sh
+```
