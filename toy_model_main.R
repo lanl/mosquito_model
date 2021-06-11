@@ -32,8 +32,6 @@ log_info("Complete: Source Model Functions")
 ### Read geo_json file ####
 # log_info("Start: Read In HPUs GeoJSON")
 hpu_boundaries <- readOGR(config_data$INPUTS$HYDROPOPS)
-FROM_GeoJson(url_file_string = config_data$INPUTS$HYDROPOPS)
-  geojson_read(x = config_data$INPUTS$HYDROPOPS,what="sp")
 hpu_ids <- hpu_boundaries@data$hpu_id
 log_info("Complete: Read In HPUs GeoJSON")
 
