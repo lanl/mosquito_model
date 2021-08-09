@@ -2,14 +2,14 @@
 # Mosquito Config File		   #
 #------------------------------------------#
 
-LOGFILE_PATH: 'logs/mosquito_model_logs.log'
-OUTPUT_DIR: 'output/'
+LOGFILE_PATH: 'MOSQUITO_POP_LOGS_PATH/mosquito_model_logs.log' # (e.g., 'logs/mosquito_model_logs.log')
+OUTPUT_DIR: 'MOSQUITO_POP_OUTPUT_PATH' # (e..g., 'output/')
 MODEL_RUN_SCRIPTS: 'model_scripts/model_run.R'
 
 # Inputs output
 INPUTS:
-  ENVIRONMENTAL_FORCING_DIR : 'input/HPU_forcing_data'
-  HYDROPOPS : 'input/HPUs.geojson' # shapefile/geojson
+  ENVIRONMENTAL_FORCING_DIR : 'MOSQUITO_POP_INPUT_PATH/HPU_forcing_data' # (e..g., 'input/HPU_forcing_data')
+  HYDROPOPS : 'MOSQUITO_POP_INPUT_PATH/HPUs.geojson' # (e..g., 'input/HPUs.geojson' # shapefile/geojson)
 
 DUMMY:
   MOSQ_PARAMS_STD:
