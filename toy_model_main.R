@@ -18,7 +18,9 @@ library(rgdal) # read geojsons
 library(logger) # logger package
 
 ### Read in Config File ####
-config_data <- yaml.load_file("mosq_config.yaml")
+args <- commandArgs(trailingOnly = TRUE)
+config_file=args[1]
+config_data <- yaml.load_file(config_file)
 
 ### Set Up Log File ####
 log.file <- file(config_data$LOGFILE_PATH)
