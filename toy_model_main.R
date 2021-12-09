@@ -5,7 +5,7 @@
 # Temperature
 # Lat/Long
 # start/stop date
-# MHI
+# HTHI
 
 ### Outputs
 # Mosquito Population csv for each hydro pop
