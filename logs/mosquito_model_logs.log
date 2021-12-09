@@ -76,3 +76,28 @@ INFO [2021-06-11 15:05:29] Start: Hydropop 9 Model Run. 10/10
 INFO [2021-06-11 15:05:29] Complete: Hydropop 9 Model Run. 10/10. Data Saved.
 INFO [2021-06-11 15:05:31] Complete: Run Mosquito Model for each HydroPop Unit
 INFO [2021-06-11 15:05:31] SUCCESS
+INFO [2021-12-09 10:01:01] Complete: Source Model Functions
+INFO [2021-12-09 10:01:06] Complete: Read In HPUs GeoJSON
+INFO [2021-12-09 10:01:06] Start: Run Mosquito Model for each HydroPop Unit
+INFO [2021-12-09 10:01:15] Start: Hydropop 0 Model Run. 1/10
+INFO [2021-12-09 10:01:15] Complete: Hydropop 0 Model Run. 1/10. Data Saved.
+INFO [2021-12-09 10:01:15] Start: Hydropop 1 Model Run. 2/10
+INFO [2021-12-09 10:01:15] Complete: Hydropop 1 Model Run. 2/10. Data Saved.
+INFO [2021-12-09 10:01:15] Start: Hydropop 2 Model Run. 3/10
+INFO [2021-12-09 10:01:15] Complete: Hydropop 2 Model Run. 3/10. Data Saved.
+INFO [2021-12-09 10:01:15] Start: Hydropop 3 Model Run. 4/10
+INFO [2021-12-09 10:01:15] Complete: Hydropop 3 Model Run. 4/10. Data Saved.
+INFO [2021-12-09 10:01:15] Start: Hydropop 4 Model Run. 5/10
+INFO [2021-12-09 10:01:15] Complete: Hydropop 4 Model Run. 5/10. Data Saved.
+INFO [2021-12-09 10:01:15] Start: Hydropop 5 Model Run. 6/10
+INFO [2021-12-09 10:01:15] Complete: Hydropop 5 Model Run. 6/10. Data Saved.
+INFO [2021-12-09 10:01:15] Start: Hydropop 6 Model Run. 7/10
+INFO [2021-12-09 10:01:15] Complete: Hydropop 6 Model Run. 7/10. Data Saved.
+INFO [2021-12-09 10:01:15] Start: Hydropop 7 Model Run. 8/10
+INFO [2021-12-09 10:01:15] Complete: Hydropop 7 Model Run. 8/10. Data Saved.
+INFO [2021-12-09 10:01:15] Start: Hydropop 8 Model Run. 9/10
+INFO [2021-12-09 10:01:15] Complete: Hydropop 8 Model Run. 9/10. Data Saved.
+INFO [2021-12-09 10:01:15] Start: Hydropop 9 Model Run. 10/10
+INFO [2021-12-09 10:01:15] Complete: Hydropop 9 Model Run. 10/10. Data Saved.
+INFO [2021-12-09 10:01:39] Complete: Run Mosquito Model for each HydroPop Unit
+INFO [2021-12-09 10:01:39] SUCCESS
