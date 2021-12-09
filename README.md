@@ -31,6 +31,7 @@ conda install -c conda-forge r r-lggger
 conda install -c conda-forge r r-yaml
 conda install -c conda-forge r r-sp
 conda install -c conda-forge r r-rgdal
+conda install -c conda-forge r r-tidyverse
 ```
 
 Each one of these `conda install` will ask you to confirm y/n to proceed to install after the environment solve if you want to stop this add a `-y` or `--yes` to auto proceed. 
