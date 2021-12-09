@@ -40,27 +40,44 @@
 # source("mosquito-pbm/code/model-source-functions/single_step_time_age.R")
 
 
-CulexSimFunc = function(times, parms, import1, import2, import3){
+CulexSimFunc = function(times, parms, import1, import2, import3, N = 100){
   
-  init = parms[15]
+  #init = parms[15]
+  init = parms['init'][[1]]
   
   # A matrix to hold simulation results
-  OutMat = matrix(rep(0.0, 602*length(times)), nrow = length(times), ncol = 602)
+  #OutMat = matrix(rep(0.0, 602*length(times)), nrow = length(times), ncol = 602)
+  
+  OutMat = matrix(rep(0.0, 2*length(times)), nrow = length(times), ncol = 2)
+  colnames(OutMat) = c('ActMosq', 'TotMosq')
   
   ## Initial conditions:
-  yinout = rep(0.0, 600)
-  yinout[201:600] = init
+  #yinout = rep(0.0, 600)
+  #yinout[201:600] = init
+  yinout = rep(0.0, 6*N)
+  yinout[(2*N + 1):(6*N)] = init
   
+  #out_data = list()
   for(i in 1:length(times)){
-    yinout = cpmod(time = 1.0, yinout = yinout , parms = parms, 
-                   input1 = import1[i], input2 = import2[i], 
-                   input3 = import3[i])
+    # yinout = cpmod(time = 1.0, yinout = yinout , parms = parms, 
+    #                input1 = import1[i], input2 = import2[i], 
+    #                input3 = import3[i])
     
     # Updating the results matrix
-    OutMat[i,] = yinout
+    #OutMat[i,] = yinout
+    out = cpmod(time = 1.0, yinout = yinout , parms = parms, 
+                   input1 = import1[i], input2 = import2[i], 
+                   input3 = import3[i])
+    yinout = out$yinout
+    #out_data[[i]] <- as.data.frame(out$data)
+    OutMat[i,'ActMosq']  <- out$data[['ActMosq']][[1]]
+    OutMat[i,'TotMosq']  <- out$data[['TotMosq']][[1]]
   }
   
-  activeMosq = OutMat[,601]
-  totalAD = OutMat[,602]
-  return(list(activeMosq,totalAD))
+  #final_out = do.call(rbind, out_data)
+  #activeMosq = OutMat[,601]
+  #totalAD = OutMat[,602]
+  #return(list(activeMosq,totalAD))
+  #return(final_out)
+  return(OutMat)
 }

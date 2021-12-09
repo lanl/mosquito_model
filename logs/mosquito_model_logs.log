@@ -101,3 +101,5 @@ INFO [2021-12-09 10:01:15] Start: Hydropop 9 Model Run. 10/10
 INFO [2021-12-09 10:01:15] Complete: Hydropop 9 Model Run. 10/10. Data Saved.
 INFO [2021-12-09 10:01:39] Complete: Run Mosquito Model for each HydroPop Unit
 INFO [2021-12-09 10:01:39] SUCCESS
+INFO [2021-12-09 10:24:16] Complete: Read In HPUs GeoJSON
+INFO [2021-12-09 10:25:23] Complete: Read In HPUs GeoJSON

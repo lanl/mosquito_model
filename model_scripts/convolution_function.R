@@ -65,5 +65,6 @@ ConvolveFunc = function(x1, y1, padsize){
   # Here I compute how many have moved into the padded region
   Emigrants = sum(Convolution1[(length(x1)+1):length(x2)])
   
-  return(c(Convolution2, Emigrants))
+  #return(c(Convolution2, Emigrants))
+  return(list(conv = Convolution2, emigrants = Emigrants))
 }
