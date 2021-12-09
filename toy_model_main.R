@@ -16,7 +16,7 @@ options("rgdal_show_exportToProj4_warnings"="none")
 library(sp)
 library(rgdal) # read geojsons
 library(logger) # logger package
-library(dplyr) # Data manipulation
+library(tidyverse) # Data manipulation
 
 ### Read in Config File ####
 args <- commandArgs(trailingOnly = TRUE)
@@ -33,6 +33,7 @@ log_appender(appender_file(config_data$LOGFILE_PATH,append = T))
 ### Source Model Run Scripts ####
 # log_info("Start: Source Model Functions")
 source(paste0(config_data$MODEL_RUN_SCRIPTS,"model_run.R"))
+source(paste0(config_data$MODEL_RUN_SCRIPTS,"daylight-hrs-fxn.R"))
 log_info("Complete: Source Model Functions")
 
 ### Read geo_json file ####
@@ -57,12 +58,15 @@ for(i in hpu_ids){
   forcing_data_i <- read.csv(paste0(config_data$INPUTS$ENVIRONMENTAL_FORCING_DIR,
                                   "/hpu_",hydropop_id,"_forcing_data.csv"))
   ## For Testing ##
-  # forcing_data_i <- read.csv(paste0("input/HPU_forcing_data/",
-  #                                   "/hpu_",hydropop_id,"_forcing_data.csv"))
+  # forcing_data_i <- read.csv(paste0("input/HPU_forcing_data/","/hpu_",hydropop_id,"_forcing_data.csv"))
   ##
   start_date <- min(as.Date(forcing_data_i$date))
   end_date <- max(as.Date(forcing_data_i$date))
   MHI_i <- hpu_boundaries$mosq_hab_index[which(hpu_boundaries@data$hpu_id==hydropop_id)]
+  # calculate daylight hours from lat/long and date range
+  forcing_data_i$daylight_hrs <- daylight.hrs(latitude = hpu_boundaries$centroid_lat[which(hpu_boundaries@data$hpu_id==hydropop_id)],
+                                              longitude = hpu_boundaries$centroid_lon[which(hpu_boundaries@data$hpu_id==hydropop_id)],
+                                              start_date = start_date,end_date = end_date)$DayLength
   log_info(paste0("Start: Hydropop ",i, " Model Run. ",count, "/", length(hpu_ids)))
   mosquito_vals <- mosq.model(parameters = parameter_vec,hpu_MHI = MHI_i,forcing_data = forcing_data_i)
   
