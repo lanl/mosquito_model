@@ -62,13 +62,13 @@ for(i in hpu_ids){
   ##
   start_date <- min(as.Date(forcing_data_i$date))
   end_date <- max(as.Date(forcing_data_i$date))
-  MHI_i <- hpu_boundaries$mosq_hab_index[which(hpu_boundaries@data$hpu_id==hydropop_id)]
+  HTHI_i <- hpu_boundaries$mosq_hab_index[which(hpu_boundaries@data$hpu_id==hydropop_id)]
   # calculate daylight hours from lat/long and date range
   forcing_data_i$daylight_hrs <- daylight.hrs(latitude = hpu_boundaries$centroid_lat[which(hpu_boundaries@data$hpu_id==hydropop_id)],
                                               longitude = hpu_boundaries$centroid_lon[which(hpu_boundaries@data$hpu_id==hydropop_id)],
                                               start_date = start_date,end_date = end_date)$DayLength
   log_info(paste0("Start: Hydropop ",i, " Model Run. ",count, "/", length(hpu_ids)))
-  mosquito_vals <- mosq.model(parameters = parameter_vec,hpu_MHI = MHI_i,forcing_data = forcing_data_i)
+  mosquito_vals <- mosq.model(parameters = parameter_vec,hpu_HTHI = HTHI_i,forcing_data = forcing_data_i)
   
   mosq_df <- data.frame(date=seq(start_date,end_date,by=1),
                         mosquito_count=mosquito_vals)

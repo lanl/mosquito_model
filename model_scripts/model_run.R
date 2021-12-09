@@ -1,5 +1,5 @@
 ### Model Run
-mosq.model <- function(parameters,hpu_MHI,forcing_data){
+mosq.model <- function(parameters,hpu_HTHI,forcing_data){
   #### From pbm-model-test-fxn.R ### 
   #### Step 1: Source Model Functions ####
   ### Paths have changed ##
@@ -12,12 +12,12 @@ mosq.model <- function(parameters,hpu_MHI,forcing_data){
   
   ### For Testing ##
   # parameters <- parameter_vec
-  # hpu_MHI <- MHI_i
+  # hpu_HTHI <- hpu_HTHI_i
   # forcing_data <- forcing_data_i
   ###
   
   # Generate Wetness Index ####
-  forcing_data$WetnessIndex <- forcing_data$precip_cm#*hpu_MHI
+  forcing_data$WetnessIndex <- forcing_data$precip_cm#*hpu_HTHI
   
   # Assign to input vectors ####
   input1_Temp <- forcing_data$temp_C
