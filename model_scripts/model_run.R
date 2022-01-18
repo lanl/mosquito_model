@@ -21,7 +21,7 @@ mosq.model <- function(parameters,hpu_HTHI,forcing_data){
   
   # Assign to input vectors ####
   input1_Temp <- forcing_data$temp_C
-  input2_DayHrs <- forcing_data$
+  input2_DayHrs <- forcing_data$daylight_hrs
   input3_Wet <- forcing_data$WetnessIndex 
   
   times<-seq(0,length(forcing_data$date)-1) ### changed 
