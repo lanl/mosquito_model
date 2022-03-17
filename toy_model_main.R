@@ -13,10 +13,12 @@
 ### Libraries 
 library(yaml) # to read in yaml file
 options("rgdal_show_exportToProj4_warnings"="none")
-library(sp)
-library(rgdal) # read geojsons
-library(logger) # logger package
-library(tidyverse) # Data manipulation
+suppressPackageStartupMessages({
+  library(sp,quietly = TRUE)
+  library(rgdal,quietly = TRUE) # read geojsons
+  library(logger,quietly = TRUE) # logger package
+  library(tidyverse,quietly = TRUE) # Data manipulation
+})
 
 ### Read in Config File ####
 args <- commandArgs(trailingOnly = TRUE)
@@ -30,6 +32,11 @@ config_data <- yaml.load_file(config_file)
 log.file <- file(config_data$LOGFILE_PATH)
 log_appender(appender_file(config_data$LOGFILE_PATH,append = T))
 
+## For Testing ##
+# log.file <- file("logs/mosquito_model_logs.log")
+# log_appender(appender_file("logs/mosquito_model_logs.log",append = T))
+#
+
 ### Source Model Run Scripts ####
 # log_info("Start: Source Model Functions")
 source(paste0(config_data$MODEL_RUN_SCRIPTS,"model_run.R"))
@@ -40,7 +47,7 @@ log_info("Complete: Source Model Functions")
 # log_info("Start: Read In HPUs GeoJSON")
 hpu_boundaries <- readOGR(config_data$INPUTS$HYDROPOPS)
 ## For Testing ##
-# hpu_boundaries <- readOGR("input/HPU_shapefiles/")
+# hpu_boundaries <- readOGR("input/HPU_shapefiles/",verbose =FALSE)
 ##
 hpu_ids <- hpu_boundaries@data$hpu_id
 log_info("Complete: Read In HPUs Shapefiles")
@@ -57,8 +64,7 @@ count <- 0
 for(i in hpu_ids[1:10]){ # making it 1:10 for now for testing purposes until parallel ideas implemented. 
   hydropop_id <- i
   count <- count+1
-  forcing_data_i <- read.csv(paste0(config_data$INPUTS$ENVIRONMENTAL_FORCING_DIR,
-                                  "/Toronto_fauxELM_output_testrun.csv"))
+  forcing_data_i <- read.csv(paste0(config_data$INPUTS$ENVIRONMENTAL_FORCING_DIR,"/Toronto_fauxELM_output_testrun.csv"))
   ## For Testing ##
   # forcing_data_i <- read.csv(paste0("input/elm_output/","Toronto_fauxELM_output_testrun.csv"))
   #
@@ -76,6 +82,9 @@ for(i in hpu_ids[1:10]){ # making it 1:10 for now for testing purposes until par
   mosq_df <- data.frame(date=seq(start_date,end_date,by=1),
                         mosquito_count=mosquito_vals)
   write.csv(mosq_df,paste0(config_data$OUTPUT_DIR,"mosquito_df_hpu_",hydropop_id,".csv"))
+  ## For Testing ##
+  # write.csv(mosq_df,paste0("output/","mosquito_df_hpu_",hydropop_id,".csv"))
+  #
   log_info(paste0("Complete: Hydropop ",i, " Model Run. ",count, "/", length(hpu_ids),". Data Saved."))
   
 }
