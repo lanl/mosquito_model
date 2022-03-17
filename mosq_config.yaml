@@ -8,25 +8,28 @@ MODEL_RUN_SCRIPTS: 'model_scripts/'
 
 # Inputs output
 INPUTS:
-  ENVIRONMENTAL_FORCING_DIR : 'MOSQUITO_POP_INPUT_PATH/HPU_forcing_data' # (e..g., 'input/HPU_forcing_data')
-  HYDROPOPS : 'MOSQUITO_POP_INPUT_PATH/HPUs.geojson' # (e..g., 'input/HPUs.geojson' # shapefile/geojson)
+  ENVIRONMENTAL_FORCING_DIR : 'MOSQUITO_POP_INPUT_PATH/elm_output' # (e..g., 'input/ELM_output')
+  HYDROPOPS : 'MOSQUITO_POP_INPUT_PATH/HPU_shapfiles' # (e..g., 'input/HPU_shapfiles' # shapefile/geojson)
 
 PARAMETERS:
   MOSQ_PARAMS_STD:
-    PsiEggs: 32270      # first parameter of Eyring equation for egg development rate
-    AEE: 41281          # activation energy parameter of Eyring equation for egg development (negative)
-    ThetaLP: 9.217e-05  # first parameter of Briere equation for larval-pupal development rate
-    TMLP: 36.09         # maximum temperature for Larval-pupal development rate in Briere equation
+    PsiEggs: 232403      # first parameter of Eyring equation for egg development rate
+    AEE: 46229          # activation energy parameter of Eyring equation for egg development (negative)
+    ThetaLP: 1.161e-04  # first parameter of Briere equation for larval-pupal development rate
+    TMLP: 34.2         # maximum temperature for Larval-pupal development rate in Briere equation
     IntAd: -0.111252    # intercept controling rate at which adults progress through embryonation
     Coef1Ad: 0.013427   # slope controling rate at which adults progress through embryonation
-    PsiAd: 1.568e+12    # first parameter of Eyring equation for adult mortality rate
-    AEAd: 91730         # activation energy parameter of Eyring equation for adult mortality (negative)
-    Cutoff: 9.154     # temperature cutoff below which no development happens fitted to larvae-pupae.
+    PsiAd: 133227    # first parameter of Eyring equation for adult mortality rate
+    AEAd: 53135         # activation energy parameter of Eyring equation for adult mortality (negative)
+    Cutoff: 10.07     # temperature cutoff below which no development happens fitted to larvae-pupae.
   MOSQ_PARAMS_FITTED:
-    DiapInt: 0.9360025
-    DiapCoef1: 0.4219935
-    OvipRate: 4.3826252
-    alpha1: -7.6602856
-    beta1: -4223.7036434
-    init: 34.0566217
-    
+    DiapInt: -0.523761651159681
+    DiapCoef1: 0.667325149723675
+    OvipRate: 2.92473418191717
+    alpha1: -6.04688716954606
+    beta1: -37.0752836376234
+    init: 9.10676986603379
+  WETNESS_INDEX:
+    WaterLevel: 1
+    Precip: 0
+

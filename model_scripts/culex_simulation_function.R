@@ -17,9 +17,9 @@
 ################ Arguments ##########################
 # 1: times - timesteps vector which needs to match the environment inputs in length
 # 2: parms - list of parameters for model
-# 3: import1 - vector of ave daily temperature
-# 4: import2 - vector of ave max daily daylight hrs
-# 5: import3 - vector of ave/normalized waterstation level or percipitation levels
+# 3: import1_Temp - vector of ave daily temperature
+# 4: import2_DayHrs - vector of ave max daily daylight hrs
+# 5: import3_Wet - vector of ave/normalized waterstation level or percipitation levels
 ###################################################%
 
 
@@ -31,53 +31,37 @@
 
 
 ############### Output ############################
-# Final_Output:returns Y1 = OutMat[,601] we only save the information from the last column
-#          of the solution matrix = single time step of total 
-#         number of ActMosq 
+# Final_Output:returns Active and Total mosquito populations
 ##################################################%
 
 # In run file source cpmod for running one iteration of spatial-temporal change
 # source("mosquito-pbm/code/model-source-functions/single_step_time_age.R")
 
 
-CulexSimFunc = function(times, parms, import1, import2, import3, N = 100){
+CulexSimFunc = function(times, parms, import1_Temp, import2_DayHrs, import3_Wet, N = 100){
   
-  #init = parms[15]
   init = parms['init'][[1]]
   
-  # A matrix to hold simulation results
-  #OutMat = matrix(rep(0.0, 602*length(times)), nrow = length(times), ncol = 602)
-  
-  OutMat = matrix(rep(0.0, 2*length(times)), nrow = length(times), ncol = 2)
-  colnames(OutMat) = c('ActMosq', 'TotMosq')
+  # OutMat = matrix(rep(0.0, 2*length(times)), nrow = length(times), ncol = 2)
+  #Add ability to output Eggs and LP stages 
+  OutMat = matrix(rep(0.0, 2*length(times)), nrow = length(times), ncol =4)
+  colnames(OutMat) = c('ActMosq', 'TotMosq','Eggs','LP')
   
   ## Initial conditions:
-  #yinout = rep(0.0, 600)
-  #yinout[201:600] = init
   yinout = rep(0.0, 6*N)
   yinout[(2*N + 1):(6*N)] = init
   
-  #out_data = list()
   for(i in 1:length(times)){
-    # yinout = cpmod(time = 1.0, yinout = yinout , parms = parms, 
-    #                input1 = import1[i], input2 = import2[i], 
-    #                input3 = import3[i])
-    
-    # Updating the results matrix
-    #OutMat[i,] = yinout
     out = cpmod(time = 1.0, yinout = yinout , parms = parms, 
-                   input1 = import1[i], input2 = import2[i], 
-                   input3 = import3[i])
+                   import1_Temp = import1_Temp[i], import2_DayHrs = import2_DayHrs[i], 
+                   import3_Wet = import3_Wet[i], N = N)
     yinout = out$yinout
-    #out_data[[i]] <- as.data.frame(out$data)
+    # Updating the results matrix
     OutMat[i,'ActMosq']  <- out$data[['ActMosq']][[1]]
     OutMat[i,'TotMosq']  <- out$data[['TotMosq']][[1]]
+    OutMat[i,'Eggs']  <- out$data[['Eggs']][[1]]
+    OutMat[i,'LP']  <- out$data[['LP']][[1]]
   }
-  
-  #final_out = do.call(rbind, out_data)
-  #activeMosq = OutMat[,601]
-  #totalAD = OutMat[,602]
-  #return(list(activeMosq,totalAD))
-  #return(final_out)
+
   return(OutMat)
 }

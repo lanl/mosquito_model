@@ -12,15 +12,16 @@ mosq.model <- function(parameters,hpu_HTHI,forcing_data){
   
   ### For Testing ##
   # parameters <- parameter_vec
-  # hpu_HTHI <- hpu_HTHI_i
+  # hpu_HTHI <- HTHI_i
   # forcing_data <- forcing_data_i
+  # parameters <- parameter_vec
   ###
   
   # Generate Wetness Index ####
-  forcing_data$WetnessIndex <- forcing_data$precip_cm#*hpu_HTHI
+  # forcing_data$WetnessIndex <- forcing_data$precip_cm#*hpu_HTHI
   
   # Assign to input vectors ####
-  input1_Temp <- forcing_data$temp_C
+  input1_Temp <- forcing_data$Temperature
   input2_DayHrs <- forcing_data$daylight_hrs
   input3_Wet <- forcing_data$WetnessIndex 
   
