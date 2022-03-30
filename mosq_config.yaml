@@ -3,7 +3,7 @@
 #------------------------------------------#
 
 LOGFILE_PATH: 'MOSQUITO_POP_LOGS_PATH/mosquito_model_logs.log' # (e.g., 'logs/mosquito_model_logs.log')
-OUTPUT_DIR: 'MOSQUITO_POP_OUTPUT_PATH' # (e..g., 'output/')
+OUTPUT_DIR: 'MOSQUITO_POP_OUTPUT_PATH/' # (e..g., 'output/')
 MODEL_RUN_SCRIPTS: 'model_scripts/'
 
 # Inputs output
