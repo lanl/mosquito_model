@@ -9,7 +9,7 @@ MODEL_RUN_SCRIPTS: 'model_scripts/'
 # Inputs output
 INPUTS:
   ENVIRONMENTAL_FORCING_DIR : 'MOSQUITO_POP_INPUT_PATH/elm_output' # (e..g., 'input/ELM_output')
-  HYDROPOPS : 'MOSQUITO_POP_INPUT_PATH/hpu_shapfiles' # (e..g., 'input/hpu_shapfiles' # shapefile/geojson)
+  HYDROPOPS : 'MOSQUITO_POP_INPUT_PATH/hpu_shapefiles' # (e..g., 'input/hpu_shapefiles' # shapefile/geojson)
 
 PARAMETERS:
   MOSQ_PARAMS_STD:
