@@ -30,7 +30,7 @@ mosq.model <- function(parameters,hpu_HTHI,forcing_data){
   
   # Run Model ####
   model_out <- data.frame(CulexSimFunc(times, parms=parameters, input1_Temp, input2_DayHrs, input3_Wet))
-  output <- model_out$TotMosq
+  output <- model_out$ActMosq
   return(output)
 }
 
