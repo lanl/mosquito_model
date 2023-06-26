@@ -38,9 +38,9 @@
 # source("mosquito-pbm/code/model-source-functions/single_step_time_age.R")
 
 
-CulexSimFunc = function(times, parms, import1_Temp, import2_DayHrs, import3_Wet, N = 100){
-  
-  init = parms['init'][[1]]
+CulexSimFunc = function(times, parms, input1_Temp, input2_DayHrs, input3_Wet, N = 100){
+  #source("mosquito-pbm/code/param-functions/mosq_param_funcs.R")
+  init = as.numeric(parms['init'][[1]])
   
   # OutMat = matrix(rep(0.0, 2*length(times)), nrow = length(times), ncol = 2)
   #Add ability to output Eggs and LP stages 
@@ -53,8 +53,8 @@ CulexSimFunc = function(times, parms, import1_Temp, import2_DayHrs, import3_Wet,
   
   for(i in 1:length(times)){
     out = cpmod(time = 1.0, yinout = yinout , parms = parms, 
-                   import1_Temp = import1_Temp[i], import2_DayHrs = import2_DayHrs[i], 
-                   import3_Wet = import3_Wet[i], N = N)
+                input1_Temp = input1_Temp[i], input2_DayHrs = input2_DayHrs[i], 
+                input3_Wet = input3_Wet[i], N = N)
     yinout = out$yinout
     # Updating the results matrix
     OutMat[i,'ActMosq']  <- out$data[['ActMosq']][[1]]
