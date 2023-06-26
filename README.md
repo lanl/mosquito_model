@@ -27,11 +27,13 @@ conda install -c conda-forge mamba
 
 Then the R packages can be added one by one (or in a list)
 ```
-conda install -c conda-forge r r-lggger
-conda install -c conda-forge r r-yaml
-conda install -c conda-forge r r-sp
-conda install -c conda-forge r r-rgdal
-conda install -c conda-forge r r-tidyverse
+conda install -c conda-forge r-lggger
+conda install -c conda-forge r-yaml
+conda install -c conda-forge r-sp
+conda install -c conda-forge r-rgdal
+conda install -c conda-forge r-tidyverse
+conda install -c conda-forge r-subplex
+conda install -c conda-forge r-optimr
 ```
 
 Each one of these `conda install` will ask you to confirm y/n to proceed to install after the environment solve if you want to stop this add a `-y` or `--yes` to auto proceed. 
