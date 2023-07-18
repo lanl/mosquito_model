@@ -20,20 +20,14 @@ You should see something like this in your terminal
 (mosq-R) [kaitlynm@darwin-fe1 miniconda3]$
 ```
 
-Next we will install mamba for faster solving of environments (at this point it doesn't seem necessary but may be as we add R or python packages to our model needs)
+Next we will install mamba for faster solving of environments (significantly faster)
 ```
 conda install -c conda-forge mamba
 ```
 
 Then the R packages can be added one by one (or in a list)
 ```
-conda install -c conda-forge r-lggger
-conda install -c conda-forge r-yaml
-conda install -c conda-forge r-sp
-conda install -c conda-forge r-rgdal
-conda install -c conda-forge r-tidyverse
-conda install -c conda-forge r-subplex
-conda install -c conda-forge r-optimr
+mamba install -c conda-forge r-essentials r-logger r-subplex r-optimr -y
 ```
 
 Each one of these `conda install` will ask you to confirm y/n to proceed to install after the environment solve if you want to stop this add a `-y` or `--yes` to auto proceed. 
