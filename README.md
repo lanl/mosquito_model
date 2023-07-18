@@ -10,6 +10,10 @@ conda activate /projects/cimmid/miniconda3/envs/mosq-R
 bash run_mosq_toy.sh path_to_config_file location_id
 ```
 
+The `path_to_config_file` can be a relative or absolute path. `location_id` should be a number matching one row of the look up table and one environmental data file. 
+
+Currently the model is set up to run locally on the master branch at `/projects/cimmid/users/kaitlynm/mosquito-toy-model`. Additionally the lookup table and the environmental input-data is stored at `/projects/cimmid/users/kaitlynm/mosquito-pbm-local/input-data`. 
+
 ## Setting up the virtual environment 
 With a miniconda3 instance already set up in the `/projects/cimmid/` folder all that needs to be done is setting up the mosquito model environment. For further details on setting up the miniconda3 installation, there will be forthcoming instructions provided by the infrastructure team. 
 
