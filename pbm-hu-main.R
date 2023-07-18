@@ -23,12 +23,12 @@ suppressPackageStartupMessages({
 
 
 #### Source Functions #### 
-source("mosquito-pbm/code/model-run-fxns/all_run_fxns.R")
-source("mosquito-pbm/code/model-source-functions/mosq_param_funcs.R")
+source("model_scripts/all_run_fxns.R")
+source("model_scripts/mosq_param_funcs.R")
 #call the function which will read in the format and observed and external data sources
 # i.e. Wetness (Precip,Water Levels, etc), Temperature, and Daylight hrs 
-source("mosquito-pbm/code/model-source-functions/data_import_function.R")
-source("mosquito-pbm/code/old-code/data-clean-build/daylight-hrs/daylight-hrs-fxn.R")
+source("model_scripts/data_import_function.R")
+source("model_scripts/daylight-hrs-fxn.R")
 
 #### Command Line Args ####
 args <- commandArgs(trailingOnly = TRUE)
@@ -50,13 +50,13 @@ log_appender(appender_file(config_data$LOGFILE_PATH,append = T))
 #### Read in Parameter Defaults
 if (tolower(mosq_type) %in%c('culex',"c")){ ### Eventually add sub classes for both culex and aedes
   params <- config_data$PARAMETERS$CULEX$MOSQ_PARAMS
-  source("mosquito-pbm/code/model-source-functions/culex_ss_test.R")
+  source("model_scripts/culex_ss_test.R")
 }
 
 if (tolower(mosq_type) %in%c('aedes','a','a_aegypti')){
   params <- config_data$PARAMETERS$A_AEGPTYI$MOSQ_PARAMS
   fit_params <- config_data$PARAMETERS$A_AEGPTYI$FIT_PARAMS
-  source("mosquito-pbm/code/model-source-functions/aegypti_ss_test.R")
+  source("model_scripts/aegypti_ss_test.R")
 }
 N <- config_data$N_VAL
 burnin <- config_data$BURNIN

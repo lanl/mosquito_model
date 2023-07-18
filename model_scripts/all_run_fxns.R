@@ -2,12 +2,12 @@
 library(subplex)
 library(optimr)
 # call CulexSimFunc
-source("mosquito-pbm/code/model-source-functions/culex_simulation_function.R")
+source("model_scripts/culex_simulation_function.R")
 # call cpmod
 #source("mosquito-pbm/code/model-source-functions/single_step_time_age.R")
 #single step file now in the main file
 # call ConvolveFunc
-source("mosquito-pbm/code/model-source-functions/convolution_function.R")
+source("model_scripts/convolution_function.R")
 
 run_model <- function(params, external.signal, N=100){
   input1_Temp<-external.signal$Temperature

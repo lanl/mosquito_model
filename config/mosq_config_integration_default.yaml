@@ -1,8 +1,8 @@
 ## Directories and Paths
-LOGFILE_PATH: 'MOSQUITO_POP_LOGS_PATH/mosquito_model_logs.log' # (e.g., 'logs/mosquito_model_logs.log')
-LOOKUP_PATH: 'mosquito-pbm-local/mosq_pbm_hu_parameter_lookup.csv'
-MODEL_OUTPUT_DIR: 'mosquito-pbm/code/model-output/model-runs/integration/'
-EXT_DATA_DIR: 'mosquito-pbm-local/input-data/hu-inputs/'
+LOGFILE_PATH: 'logs/mosquito_model_logs.log' # (e.g., 'logs/mosquito_model_logs.log')
+LOOKUP_PATH: '/projects/cimmid/users/kaitlynm/mosquito-pbm-local/input-data/mosq_pbm_hu_parameter_lookup.csv'
+MODEL_OUTPUT_DIR: '/projects/cimmid/users/kaitlynm/mosquito-pbm-local/output-data/'
+EXT_DATA_DIR: '/projects/cimmid/users/kaitlynm/mosquito-pbm-local/input-data/hu-inputs/'
 MOSQ_DATA_PATH: NULL
 
 ## Model Set up Parameters/Information
@@ -96,4 +96,4 @@ PARAMETERS:
         c: 8.56E-03
       Cutoff: 11.36    # temperature cutoff below which no development happens fitted to larvae-pupae.
       init: 34.0566217
-  
+    
