@@ -51,30 +51,29 @@
 # source("mosquito-pbm/code/model-source-functions/convolution_function.R")
 
 cpmod = function(time, yinout, parms, import1_Temp, import2_DayHrs, import3_Wet, N = 100){
-  
   # Setting up the domain  # Number of boxes in the discretized domain for each life stage
   da = 1.0/N               # thickness of each box
   
-  # Defining all of the parameters
-  DiapInt = parms['DiapInt'][[1]]   # diapause intercept for logistic regression model
-  DiapCoef1 = parms['DiapCoef1'][[1]]  # (negative) slope proportion in diapause changes with respect to day length
-  PsiEggs = parms['PsiEggs'][[1]]   # first parameter of Eyring equation for egg development rate
-  AEE = parms['AEE'][[1]]       # activation energy parameter of Eyring equation for egg development (negative)
-  ThetaLP = parms['ThetaLP'][[1]]    # first parameter of Briere equation for larval-pupal development rate
-  TMLP = parms['TMLP'][[1]]       # maximum temperature for Larval-pupal development rate in Briere equation
-  IntAd = parms['IntAd'][[1]]      # intercept controling rate at which adults progress through embryonation
-  Coef1Ad = parms['Coef1Ad'][[1]]    # slope controling rate at which adults progress through embryonation
-  PsiAd = parms['PsiAd'][[1]]     # first parameter of Eyring equation for adult mortality rate
-  AEAd = parms['AEAd'][[1]]      # activation energy parameter of Eyring equation for adult mortality (negative)
-  Cutoff = parms['Cutoff'][[1]]    # temperature cutoff below which no development happens fitted to larvae-pupae.
-  OvipRate = parms['OvipRate'][[1]] # oviposition rate.
-  alpha1 = parms['alpha1'][[1]]    # controls Culex density dependent mortality
-  beta1 = parms['beta1'][[1]]     # adjusts Culex density dependence as a function of water levels
+  # # Defining all of the parameters
+  # DiapInt = parms['DiapInt'][[1]]   # diapause intercept for logistic regression model
+  # DiapCoef1 = parms['DiapCoef1'][[1]]  # (negative) slope proportion in diapause changes with respect to day length
+  # PsiEggs = parms['PsiEggs'][[1]]   # first parameter of Eyring equation for egg development rate
+  # AEE = parms['AEE'][[1]]       # activation energy parameter of Eyring equation for egg development (negative)
+  # ThetaLP = parms['ThetaLP'][[1]]    # first parameter of Briere equation for larval-pupal development rate
+  # TMLP = parms['TMLP'][[1]]       # maximum temperature for Larval-pupal development rate in Briere equation
+  # IntAd = parms['IntAd'][[1]]      # intercept controling rate at which adults progress through embryonation
+  # Coef1Ad = parms['Coef1Ad'][[1]]    # slope controling rate at which adults progress through embryonation
+  # PsiAd = parms['PsiAd'][[1]]     # first parameter of Eyring equation for adult mortality rate
+  # AEAd = parms['AEAd'][[1]]      # activation energy parameter of Eyring equation for adult mortality (negative)
+  # parms$Cutoff = parms['parms$Cutoff'][[1]]    # temperature parms$Cutoff below which no development happens fitted to larvae-pupae.
+  # OvipRate = parms['OvipRate'][[1]] # oviposition rate.
+  # alpha1 = parms['alpha1'][[1]]    # controls Culex density dependent mortality
+  # beta1 = parms['beta1'][[1]]     # adjusts Culex density dependence as a function of water levels
   
-  # If temperature is below zero degrees C, we kill off all of the aquatic
-  # life stages
+  # If temperature is below zero degrees C, we kill off all non-egg life stages
+  # Keeping 0 degrees for now - lit showed its probably somewhere between -1 and 2C
   if(import1_Temp < 0.0){
-    yinout[1:(2*N)] = 0.0
+    yinout[(N+1):(6*N)] = 0.0
   }
   
   # subsetting the different life stages
@@ -93,20 +92,23 @@ cpmod = function(time, yinout, parms, import1_Temp, import2_DayHrs, import3_Wet,
   #----------------------------------------------------------------------------------------------
   # first I solve the reaction part of the models for each life stage:
   
-  #if(import1_Temp > Cutoff){
-    # I can compute the analytic solution for the integro-differential equation for
-    # competition in the combined larval and pupal stages. 
-    # The density dependent mortality coefficient for lake level:
-    ddmortLP = as.numeric(exp(alpha1 + beta1*import3_Wet)) # density-dependent mortality coefficient
-    LP = LP/(1.0 + ddmortLP*sum(LP)*da*time)
-    # LP = LP*exp(-ddmortLP*time)
-    # Adults die by dropping off the edge of their age domain or by a density independent
-    # temperature mortality rate.
-    dimortAD = as.numeric(PsiAd*(273.15 + import1_Temp)*exp(-AEAd/(8.3144598*(273.15 + import1_Temp))))
-    AD1 = AD1*exp(-dimortAD*time)
-    AD2 = AD2*exp(-dimortAD*time)
-    AD3 = AD3*exp(-dimortAD*time)
-    AD4 = AD4*exp(-dimortAD*time)
+  #if(import1_Temp > as.numeric(parms$Cutoff)){
+  # I can compute the analytic solution for the integro-differential equation for
+  # competition in the combined larval and pupal stages. 
+  # The density dependent mortality coefficient for lake level:
+  ddmortLP = calc_mosq_atr(import3_Wet, parms$LP_Mortality)
+  #ddmortLP = as.numeric(exp(alpha1 + beta1*import3_Wet)) # density-dependent mortality coefficient
+  LP = LP/(1.0 + ddmortLP*sum(LP)*da*time)
+  # LP = LP*exp(-ddmortLP*time)
+  # Adults die by dropping off the edge of their age domain or by a density independent
+  # temperature mortality rate.
+  #dimortAD = as.numeric(PsiAd*(273.15 + import1_Temp)*exp(-AEAd/(8.3144598*(273.15 + import1_Temp))))
+  #need the division below because the model fits to lifespan not mortality
+  dimortAD = 1 / calc_mosq_atr(import1_Temp, parms$Lifespan)
+  AD1 = AD1*exp(-dimortAD*time)
+  AD2 = AD2*exp(-dimortAD*time)
+  AD3 = AD3*exp(-dimortAD*time)
+  AD4 = AD4*exp(-dimortAD*time)
   #}
   
   #----------------------------------------------------------------------------------------------
@@ -115,23 +117,29 @@ cpmod = function(time, yinout, parms, import1_Temp, import2_DayHrs, import3_Wet,
   # First I will compute the proportion of adults in diapause. This will be used for addition
   # of eggs to the first age of the egg age domain as adults only oviposit if not in diapause.
   # Here I compute the proportion of Culex that are diapausing.
-  DiapProp = 1.0/(1.0 + exp(-(DiapInt - DiapCoef1*import2_DayHrs)))
+  #DiapProp = 1.0/(1.0 + exp(-(DiapInt - DiapCoef1*import2_DayHrs)))
+  #No diapause for aedes - need to determine if we want to do something with the dryness and the eggs
+  #DiapProp = calc_mosq_atr(import2_DayHrs, parms$Diapause)
   
   # setting up maturation velocities
-  if(import1_Temp > Cutoff){
-    vtE = as.numeric(PsiEggs*(273.15 + import1_Temp)*exp(-AEE/(8.3144598*(273.15+import1_Temp)))) # for eggs
+  if(import1_Temp > as.numeric(parms$Cutoff)){
+    #vtE = as.numeric(PsiEggs*(273.15 + import1_Temp)*exp(-AEE/(8.3144598*(273.15+import1_Temp)))) # for eggs
+    vtE = calc_mosq_atr(import1_Temp, parms$Egg)
   }else{
     vtE = 0.0
   }
-  
-  if(import1_Temp > Cutoff & import1_Temp <= TMLP){
-    vtLP = as.numeric(ThetaLP*import1_Temp*(import1_Temp - Cutoff)*sqrt(TMLP - import1_Temp)) # for L1 to pupae
+  #note: the temp max will be an issue if we switch to something that is not briere, but we could probably just remove it
+  #may want to turn this into a nested ifelse where if the function is briere we also have a max temp otherwise we don't
+  if(import1_Temp > as.numeric(parms$Cutoff) & import1_Temp <= as.numeric(parms$LP$Tm)){
+    #vtLP = as.numeric(ThetaLP*import1_Temp*(import1_Temp - parms$Cutoff)*sqrt(TMLP - import1_Temp)) # for L1 to pupae
+    vtLP = calc_mosq_atr(import1_Temp, parms$LP)
   }else{
     vtLP = 0.0
   }
   
-  if(import1_Temp > Cutoff){
-    vtA = as.numeric(IntAd + Coef1Ad*import1_Temp) # for adults
+  if(import1_Temp > as.numeric(parms$Cutoff)){
+    #vtA = as.numeric(IntAd + Coef1Ad*import1_Temp) # for adults
+    vtA = calc_mosq_atr(import1_Temp, parms$GP)
   }else{
     vtA = 0.0
   }
@@ -139,7 +147,7 @@ cpmod = function(time, yinout, parms, import1_Temp, import2_DayHrs, import3_Wet,
   # reseting the individuals that have reached each gonotrophic cycle to zero
   g1 = 0.0; g2 = 0.0; g3 = 0.0; g4 = 0.0
   
-  if(import1_Temp > Cutoff){
+  if(import1_Temp > as.numeric(parms$Cutoff)){
     EggsShifted = ageEggs + rep(vtE*time, length(ageEggs))
     LPShifted = ageLP + rep(vtLP*time, length(ageLP))
     
@@ -162,8 +170,8 @@ cpmod = function(time, yinout, parms, import1_Temp, import2_DayHrs, import3_Wet,
     
     #The other option is to vary the shape of the aging distribution by the
     #temp input
-    MAD = dgamma(x = ageAD1, shape = vtA*time, rate = 1)
-    # MAD = dexp(x=ageAD1, rate = 1/vtA*time)
+    # MAD = dgamma(x = ageAD1, shape = vtA*time, rate = 1)
+    MAD = dexp(x=ageAD1, rate = 1/vtA*time)
     MAD = MAD/sum(MAD) # Normalizing
     NewAD1 = ConvolveFunc(x1 = AD1, y1 = MAD, padsize = length(AD1))
     AD1 = NewAD1$conv
@@ -190,11 +198,14 @@ cpmod = function(time, yinout, parms, import1_Temp, import2_DayHrs, import3_Wet,
     
     # Eggs that exceed the egg greak point enter the larval stage as above. All others are
     # shifted to the right with boxes replaced on the left side of the age domain.
+    #Should Eggs below (at the right of the) be EggsShifted
     Eggs = c(rep(0.0, length(EggsShifted[EggsShifted > 1.0])), Eggs[EggsShifted <= 1.0])
     
     # Eggs are added to the first age of the egg domain by adult oviposition.
     # Oviposition for Culex pipiens
-    Ovipos = OvipRate*(1.0 - DiapProp)*(g1 + g2 + g3 + g4)*time
+    #Ovipos = as.numeric(parms$Oviposition)*(1.0 - DiapProp)*(g1 + g2 + g3 + g4)*time
+    #removed the diapause stuff here
+    Ovipos = as.numeric(calc_mosq_atr(import1_Temp,parms$Oviposition))*(g1 + g2 + g3 + g4)*time
     #Eggs[1] = Eggs[1] + Ovipos/da
     Eggs[1:length(EggsShifted[EggsShifted > 1.0])] = Eggs[1:length(EggsShifted[EggsShifted > 1.0])] + 
       Ovipos/(length(EggsShifted[EggsShifted > 1.0])*da)
@@ -202,9 +213,11 @@ cpmod = function(time, yinout, parms, import1_Temp, import2_DayHrs, import3_Wet,
   
   #----------------------------------------------------------------------------------------------
   # I compute an estimate of the number of active mosquitos
-  ActivMosq = (1.0 - DiapProp)*(g1 + g2 + g3 + g4)
+  #ActivMosq = (1.0 - DiapProp)*(g1 + g2 + g3 + g4)
+  #remove diapause stuff for now
+  ActivMosq = (g1 + g2 + g3 + g4)
   TotalMosq = sum(AD1) + sum(AD2) + sum(AD3) + sum(AD4)
   # updating the state variables
-  out = list(yinout = c(Eggs, LP, AD1, AD2, AD3, AD4), data = c('ActMosq' = ActivMosq, 'TotMosq' = TotalMosq,'Eggs' = sum(Eggs), "LP" = sum(LP)))
+  out = list(yinout = c(Eggs, LP, AD1, AD2, AD3, AD4), data = c('ActMosq' = ActivMosq, 'TotMosq' = TotalMosq, 'Eggs' = sum(Eggs), "LP" = sum(LP)))
   return(out)
 }

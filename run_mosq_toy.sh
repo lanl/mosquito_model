@@ -1,13 +1,21 @@
 #!/bin/sh
 
-# Takes one argument:
+# Takes two arguments:
 # Path to config file
 
-if [ "$#" -lt 1 ] || ! [ -f "$1" ] ; then
-    echo "ERROR!! Must specify configuration file path as an argument."
+if [ "$1" == "" ]; then
+    echo "Error: Must specify both configuration file path and location id"
+    exit 1
+fi
+
+if [ "$2" == "" ]; then
+    echo "Error: Must specify both configuration file path and location id"
+    exit 1
 fi
 
 
-CONFIG_FILE=$1
 
-Rscript toy_model_main.R $CONFIG_FILE
+CONFIG_FILE=$1
+LOCATION_ID=$2
+
+Rscript pbm-hu-main.R -c $CONFIG_FILE -m culex -l $LOCATION_ID

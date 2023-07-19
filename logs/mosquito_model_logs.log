@@ -19,3 +19,23 @@ INFO [2022-04-07 10:07:28] Start: Hydropop 16 Model Run. 9/4033
 INFO [2022-04-07 10:07:29] Complete: Hydropop 16 Model Run. 9/4033. Data Saved.
 INFO [2022-04-07 10:07:29] Start: Hydropop 17 Model Run. 10/4033
 INFO [2022-04-07 10:07:31] Complete: Hydropop 17 Model Run. 10/4033. Data Saved.
+INFO [2023-07-18 17:22:06] Complete: Location Specific parameters updated
+INFO [2023-07-18 17:22:07] Complete: Data read in
+INFO [2023-07-18 17:22:07] Start: Run Mosquito Model for HU-11230
+INFO [2023-07-18 17:22:08] Complete: Run Mosquito Model for HU-11230
+INFO [2023-07-18 17:22:08] Complete: Data saved for HU-11230
+INFO [2023-07-18 17:22:08] SUCCESS
+INFO [2023-07-18 17:23:58] Complete: Location Specific parameters updated
+INFO [2023-07-18 17:23:59] Complete: Data read in
+INFO [2023-07-18 17:23:59] Start: Run Mosquito Model for HU-11230
+INFO [2023-07-18 17:24:00] Complete: Run Mosquito Model for HU-11230
+INFO [2023-07-18 17:24:01] Complete: Data saved for HU-11230
+INFO [2023-07-18 17:24:01] SUCCESS
+INFO [2023-07-18 17:40:50] Complete: Location Specific parameters updated
+INFO [2023-07-18 17:41:48] Complete: Location Specific parameters updated
+INFO [2023-07-18 17:43:22] Complete: Location Specific parameters updated
+INFO [2023-07-18 17:43:22] Complete: Data read in
+INFO [2023-07-18 17:43:22] Start: Run Mosquito Model for HU-11230
+INFO [2023-07-18 17:43:24] Complete: Run Mosquito Model for HU-11230
+INFO [2023-07-18 17:43:24] Complete: Data saved for HU-11230
+INFO [2023-07-18 17:43:24] SUCCESS

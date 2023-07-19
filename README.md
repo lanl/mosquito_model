@@ -1,5 +1,23 @@
-# Mosquito Toy Model
-Home of the Mosquito Toy Model. Need to make it a separate repo due to underlying issues with the Mosquito PBM that will take too long to resolve. 
+# Mosquito PBM Integration Work Flow
+Home of the Mosquito PBM set up for the integration workflow.  
+
+## Running the model 
+If the conda environment (mosq-R) is set up in the `cimmid/miniconda3/` folder, you do not need to re-set up this environment. *If this is the first time running the model you will need to set up the conda environment. **See instructions below***
+
+The basic comands to run the model are: 
+```
+conda activate /projects/cimmid/miniconda3/envs/mosq-R
+bash run_mosq_toy.sh path_to_config_file location_id
+```
+
+The `path_to_config_file` can be a relative or absolute path. `location_id` should be a number matching one row of the look up table and one environmental data file. 
+
+Currently the model is set up to run locally on the master branch at `/projects/cimmid/users/kaitlynm/mosquito-toy-model`. The config file to use is `config/mosq_config_integration_default.yaml`. Additionally the lookup table and the environmental input-data is stored at `/projects/cimmid/users/kaitlynm/mosquito-pbm-local/input-data`. 
+
+An example run looks like: 
+```
+bash run_mosq_toy.sh config/mosq_config_integration_default.yaml 11653
+```
 
 ## Setting up the virtual environment 
 With a miniconda3 instance already set up in the `/projects/cimmid/` folder all that needs to be done is setting up the mosquito model environment. For further details on setting up the miniconda3 installation, there will be forthcoming instructions provided by the infrastructure team. 
@@ -32,11 +50,7 @@ mamba install -c conda-forge r-essentials r-logger r-subplex r-optimr -y
 
 Each one of these `conda install` will ask you to confirm y/n to proceed to install after the environment solve if you want to stop this add a `-y` or `--yes` to auto proceed. 
 
-## Running the model 
-```
-conda activate /projects/cimmid/miniconda3/mosq-R
-bash run_mosq_toy.sh
-```
+
 
 
 ## Copyright
@@ -52,4 +66,4 @@ This program is open source under the BSD-3 License. Redistribution and use in s
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# TEST MIRROR
+
