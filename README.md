@@ -1,7 +1,7 @@
 # Mosquito PBM Integration Work Flow
 Home of the Mosquito PBM set up for the integration workflow.  
 
-## Running the model 
+## Running the model (single location_id run) 
 If the conda environment (mosq-R) is set up in the `cimmid/miniconda3/` folder, you do not need to re-set up this environment. *If this is the first time running the model you will need to set up the conda environment. **See instructions below***
 
 The basic comands to run the model are: 
@@ -18,6 +18,25 @@ An example run looks like:
 ```
 bash run_mosq_toy.sh config/mosq_config_integration_default.yaml 11653
 ```
+
+## Running the model at full-scale on Chicoma
+### Setting up the batch script
+The file `mosquitoPopSubmissionTemplate.sh` is a template batch script. A full scale Chicoma run requires a plaintext file with *ONLY* one hpu_id on each line (see `hpus_testSlurm.txt` for an example).
+The Python script `batchScriptSetup.py` reads this plaintext file and partitions it into jobs using slurm arrays. It then generates the appropriate batch script.
+This script can be run with the following:
+```
+module load python
+python batchScriptSetup.py -n <experiment_name> -m <HPU list plaintext file>
+```
+For example,
+```
+python batchScriptSetup.py -n testSlurm -m hpus_testSlurm.txt
+```
+This can be run with the script `reset_testrun.sh`, which also cleans the temporary files and slurm output from the previous run (it does not remove mosquito model output).
+
+### Running the model
+The template batch files currently points to the configuration file `mosq_config_integration_default_chicoma.yaml`. This config file contains example filepaths for the Chicoma system (including storing model output in scratch space).
+Run `sbatch mosquitoPopSubmission_<experiment_name>.sh` from the mosquito_pop model directory to run the model.
 
 ## Setting up the virtual environment 
 With a miniconda3 instance already set up in the `/projects/cimmid/` folder all that needs to be done is setting up the mosquito model environment. For further details on setting up the miniconda3 installation, there will be forthcoming instructions provided by the infrastructure team. 

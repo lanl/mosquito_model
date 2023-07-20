@@ -1,0 +1,99 @@
+## Directories and Paths
+LOGFILE_PATH: 'logs/mosquito_model_logs.log' # (e.g., 'logs/mosquito_model_logs.log')
+LOOKUP_PATH: '/lustre/scratch5/jkeithley/cimmid/mosquito-pbm-local/input-data/mosq_pbm_hu_parameter_lookup.csv'
+MODEL_OUTPUT_DIR: '/lustre/scratch5/jkeithley/cimmid/mosquito-pbm-local/output-data/'
+EXT_DATA_DIR: '/lustre/scratch5/jkeithley/cimmid/mosquito-pbm-local/input-data/hu-inputs/'
+MOSQ_DATA_PATH: NULL
+
+## Model Set up Parameters/Information
+RUN_TYPE: 'basic' ## options : 'train', 'basic' (train will optimize fit parameters and then update tables and run full matched series to observed data)
+N_VAL: 100 #age bins
+BURNIN: 3 # number of days to spin up simulation before recording mosquito populations (two weeks is default)
+WETNESS:
+  column: !expr c('sub_surface_runoff', 'surface_runoff',"total_precipitation")
+  val: !expr c(0,1,0)
+TEMP:
+  column: !expr c('mean_temp') ### there will only ever be one column for temp, this is just to make sure we know what column to look for when setting up the data for the run. 
+DATE: 
+  column: !expr c('date') ### there will only ever be one column for date, this is just to make sure we know what column to look for when setting up the data for the run.
+  format: !expr c('%Y-%m-%d')
+  start_date: !expr c("2000-01-01")
+  end_date: !expr c("2020-12-31")
+##### Default parameters
+## Culex Pips 
+ # p_sci_fit = c(PsiEggs = 232403,      # first parameter of Eyring equation for egg development rate
+  #             AEE = 46229,          # activation energy parameter of Eyring equation for egg development (negative)
+  #             ThetaLP = 1.161e-04,  # first parameter of Briere equation for larval-pupal development rate
+  #             TMLP = 34.2,         # maximum temperature for Larval-pupal development rate in Briere equation
+  #             IntAd = -0.111252,    # intercept controling rate at which adults progress through embryonation
+  #             Coef1Ad = 0.013427,   # slope controling rate at which adults progress through embryonation
+  #             PsiAd = 133227,    # first parameter of Eyring equation for adult mortality rate
+  #             AEAd = 53135,         # activation energy parameter of Eyring equation for adult mortality (negative)
+  #             Cutoff = 10.07)       # temperature cutoff below which no development happens fitted to larvae-pupae.
+PARAMETERS: 
+  CULEX_PIPS:
+    MOSQ_PARAMS:
+      Egg:
+        func: 'erying'
+        Psi: 232403        # first parameter of Eyring equation for egg development rate
+        AE: 46229        # activation energy parameter of Eyring equation for egg development (negative)
+      LP:
+        func: 'briere'
+        T0: 10.07        # minimum temperature for Larval-pupal development rate in Briere equation
+        Tm: 34.20         # maximum temperature for Larval-pupal development rate in Briere equation
+        c: 1.161e-04      # first parameter of Briere equation for larval-pupal development rate
+      GP:
+        func: 'linear'
+        Int: -0.111252    # intercept controling rate at which adults progress through gonotrophic cycle
+        Coef: 0.013427   # slope controling rate at which adults progress through gonotrophic cycle
+      Adult_Mortality:
+        func: 'erying'
+        Psi: 133227    # first parameter of Eyring equation for adult mortality rate
+        AE: 53135         # activation energy parameter of Eyring equation for adult mortality (negative)
+      Cutoff: 10.07     # temperature cutoff below which no development happens fitted to larvae-pupae.
+      Diapause:
+        func: 'diapause_exp'
+        Int: -3
+        Coef: 1.5
+      LP_Mortality:
+        func: 'exponential'
+        alpha1: NA
+        beta1: NA
+      Oviposition: NA
+      init: NA
+  A_AEGPTYI:
+    MOSQ_PARAMS:
+      Egg: 
+        func: 'sharpe-schoolfield'
+        r: 0.256 #parameters for sharpe-schoolfield embryogenesis (see embryo_func.py)
+        Ha: 10798.18
+        Hh: 1000000
+        T1_2: 14184.50
+      LP:
+        func: 'briere'
+        T0: 11.11 #parameters for fitted briere function of larvae-pupae development (see fit_LPD.py)
+        Tm: 39.81
+        c: 8.06e-05
+      GP: 
+        func: 'sharpe-schoolfield'
+        r: 0.216 #parameters for fitted briere function of larvae-pupae development (see fit_LPD.py)
+        Ha: 15725.23
+        Hh: 1756481.07
+        T1_2: 447.17
+      LP_Mortality:
+        func: 'exponential'
+        alpha1: -7.6602856
+        beta1: -4223.7036434
+      Lifespan: 
+        func: 'briere'
+        T0: 11.36
+        Tm: 36.01
+        c: 0.021
+      Oviposition:
+        func: 'briere'
+        T0: 14.58
+        Tm: 34.61
+        c: 8.56E-03
+      Cutoff: 11.36    # temperature cutoff below which no development happens fitted to larvae-pupae.
+      init: 34.0566217
+    
