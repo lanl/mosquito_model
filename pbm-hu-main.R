@@ -93,7 +93,7 @@ log_info(paste0("Complete: Run Mosquito Model for HU-",location_id))
 
 write.csv(out_all,paste0(config_data$MODEL_OUTPUT_DIR,"pbm_out_",location_id,".csv"),row.names = FALSE)
 log_info(paste0("Complete: Data saved for HU-",location_id))
-log_info("SUCCESS")
-print("SUCCESS")
+log_info(paste0(location_id, "_SUCCESS"))
+print(paste0(location_id, "_SUCCESS"))
 close(log.file)
 
