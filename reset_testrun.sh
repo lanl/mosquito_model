@@ -1,4 +1,4 @@
 #!/bin/sh
 
-rm mosquitoPopSubmission_testSlurm.sh slurm-* slurmArrayMapping/*
+rm slurm-*
 python batchScriptSetup.py -n testSlurm -m hpus_testSlurm.txt
