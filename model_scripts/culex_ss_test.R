@@ -130,7 +130,7 @@ cpmod = function(time, yinout, parms, input1_Temp, input2_DayHrs, input3_Wet, N 
   
   if(input1_Temp > as.numeric(parms$Cutoff) & input1_Temp <= as.numeric(parms$LP$Tm)){
     #vtLP = as.numeric(ThetaLP*input1_Temp*(input1_Temp - parms$Cutoff)*sqrt(TMLP - input1_Temp)) # for L1 to pupae
-    vtLP = ifelse(is.na(calc_mosq_atr(input1_Temp, parms$LP)),0,calc_mosq_atr(input1_Temp, parms$LP))
+    vtLP = calc_mosq_atr(input1_Temp, parms$LP)
   }else{
     vtLP = 0.0
   }
@@ -148,15 +148,36 @@ cpmod = function(time, yinout, parms, input1_Temp, input2_DayHrs, input3_Wet, N 
   if(input1_Temp > as.numeric(parms$Cutoff)){
     EggsShifted = ageEggs + rep(vtE*time, length(ageEggs))
     LPShifted = ageLP + rep(vtLP*time, length(ageLP))
-    
     # Pupae that exceed the pupal break point enter the adult stage as below. All others
     # are shifted to the right with boxes replaced on the left side of the age domain.
     LP = c(rep(0.0, length(LPShifted[LPShifted > 1.0])), LP[LPShifted <= 1.0])
-    
+
     # Eggs that exceed the egg breakpoint are added to the first age of LP age domain.
     # To prevent spikes, we divide the new LP individuals evenly among the new boxes.
-    LP[1:length(LPShifted[LPShifted > 1.0])] = LP[1:length(LPShifted[LPShifted > 1.0])] +
-      sum(Eggs[EggsShifted > 1.0])/length(LPShifted[LPShifted > 1.0])
+    ### OLD LINE ####
+    # LP[1:length(LPShifted[LPShifted > 1.0])] = LP[1:length(LPShifted[LPShifted > 1.0])] +
+    #     sum(Eggs[EggsShifted > 1.0])/length(LPShifted[LPShifted > 1.0])
+    ##### 
+    ### NEW LINE ####
+    #### When the temperature is above the LP cut off there is no longer development in the LP class
+    #### so there are no empty bins to distribute the new eggs into
+    #### Option 1 Distribute across all bins (or the 1st 10/25/50%)
+    #### Option 2 add to first box only (this will cause spikes)
+    #### Starting with Option 1 (100% of the domain)
+    if(length(LPShifted[LPShifted > 1.0])>0){
+      LP[1:length(LPShifted[LPShifted > 1.0])] = LP[1:length(LPShifted[LPShifted > 1.0])] +
+        sum(Eggs[EggsShifted > 1.0])/length(LPShifted[LPShifted > 1.0])
+    }else{
+      LP = LP + sum(Eggs[EggsShifted > 1.0])/length(LP)
+    }
+    ##### Option 2
+    # if(length(LPShifted[LPShifted > 1.0])>0){
+    #   LP[1:length(LPShifted[LPShifted > 1.0])] = LP[1:length(LPShifted[LPShifted > 1.0])] +
+    #     sum(Eggs[EggsShifted > 1.0])/length(LPShifted[LPShifted > 1.0])
+    # }else{
+    #   LP[1] = LP[1] + sum(Eggs[EggsShifted > 1.0])
+    # }
+    ##### 
     
     # First gonotrophic cycle
     # Computing the gamma distributed development rate.  
