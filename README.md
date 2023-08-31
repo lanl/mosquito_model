@@ -36,7 +36,7 @@ This can be run with the script `reset_testrun.sh`, which also cleans the tempor
 
 ### Running the model
 The template batch files currently points to the configuration file `mosq_config_integration_default_chicoma.yaml`. This config file contains example filepaths for the Chicoma system (including storing model output in scratch space).
-Run `sbatch mosquitoPopSubmission_<experiment_name>.sh` from the mosquito_pop model directory to run the model.
+Run `sbatch -J <experiment_name> mosquitoPopSubmission_<experiment_name>.sh` from the mosquito_pop model directory to run the model.
 
 ## Setting up the virtual environment 
 With a miniconda3 instance already set up in the `/projects/cimmid/` folder all that needs to be done is setting up the mosquito model environment. For further details on setting up the miniconda3 installation, there will be forthcoming instructions provided by the infrastructure team. 
