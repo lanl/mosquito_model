@@ -7,6 +7,8 @@
 
 #### Environment Set Up #### 
 rm(list = ls())
+.libPaths("/usr/projects/cimmid/miniconda3/envs/mosq-R/lib/R/library/")
+
 library(yaml) # to read in yaml file
 options("rgdal_show_exportToProj4_warnings"="none")
 suppressPackageStartupMessages({

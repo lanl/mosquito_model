@@ -130,7 +130,7 @@ cpmod = function(time, yinout, parms, input1_Temp, input2_DayHrs, input3_Wet, N 
   
   if(input1_Temp > as.numeric(parms$Cutoff) & input1_Temp <= as.numeric(parms$LP$Tm)){
     #vtLP = as.numeric(ThetaLP*input1_Temp*(input1_Temp - parms$Cutoff)*sqrt(TMLP - input1_Temp)) # for L1 to pupae
-    vtLP = calc_mosq_atr(input1_Temp, parms$LP)
+    vtLP = ifelse(is.na(calc_mosq_atr(input1_Temp, parms$LP)),0,calc_mosq_atr(input1_Temp, parms$LP))
   }else{
     vtLP = 0.0
   }

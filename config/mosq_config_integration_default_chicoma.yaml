@@ -1,8 +1,8 @@
 ## Directories and Paths
 LOGFILE_PATH: 'logs/mosquito_model_logs.log' # (e.g., 'logs/mosquito_model_logs.log')
-LOOKUP_PATH: '/lustre/scratch5/jkeithley/cimmid/mosquito-pbm-local/input-data/mosq_pbm_hu_parameter_lookup.csv'
-MODEL_OUTPUT_DIR: '/lustre/scratch5/jkeithley/cimmid/mosquito-pbm-local/output-data/'
-EXT_DATA_DIR: '/lustre/scratch5/jkeithley/cimmid/mosquito-pbm-local/input-data/hu-inputs/'
+LOOKUP_PATH: '/lustre/scratch4/turquoise/kaitlynm/mosquito_mod_data/input/mosq_pbm_hu_parameter_lookup.csv'
+MODEL_OUTPUT_DIR: '/lustre/scratch4/turquoise/kaitlynm/mosquito_mod_data/output/'
+EXT_DATA_DIR: '/lustre/scratch4/turquoise/kaitlynm/mosquito_mod_data/input/hu-inputs/'
 MOSQ_DATA_PATH: NULL
 
 ## Model Set up Parameters/Information

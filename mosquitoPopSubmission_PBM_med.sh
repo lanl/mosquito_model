@@ -5,7 +5,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH -t 03:00:00
-#SBATCH --array=INSERT_ARRAYS
+#SBATCH --array=0-20%10
 
 module load python
 
