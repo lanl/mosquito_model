@@ -1,6 +1,6 @@
 ### Summarise HU-forcing data from climate drivers
 ##### Summarise HU.csv files to daily
-.libPaths("/usr/projects/cimmid/miniconda3/envs/mosq-R/lib/R/library/")
+.libPaths("/usr/projects/epiearth/miniconda3/envs/mosq-R/lib/R/library/")
 print(.libPaths())
 suppressPackageStartupMessages(library(tidyverse))
 library(lubridate)
@@ -10,7 +10,7 @@ list.forcing.nums <- gsub("/lustre/scratch4/turquoise/.mdt5/jschwenk/na_10k_forc
 # list.forcing.nums <- gsub("Desktop/DR/na_10k/forcings/hourly/","",list.forcing)
 
 already.complete <- list.files(pattern="[0-9]",path = "/lustre/scratch5/kaitlynm/mosquito_mod_data/input")
-#already.complete <- list.files(pattern="[0-9]",path = "/usr/projects/cimmid/users/kaitlynm/mosquito_model/input")
+#already.complete <- list.files(pattern="[0-9]",path = "/usr/projects/epiearth/users/kaitlynm/mosquito_model/input")
 # already.complete <- list.files(pattern="[0-9]",path = "Desktop/test-mosq/")
 
 done.hu <- which(list.forcing.nums%in%already.complete)
@@ -40,7 +40,7 @@ for (i in index[1000:2000]){#length(list.forcing)) {
               mean_temp=mean(temperature_2m)) %>%
     ungroup()
   # write.csv(forcings_daily,paste0("Desktop/test-mosq/",hu_num),row.names = FALSE)
- # write.csv(forcings_daily,paste0("/usr/projects/cimmid/users/kaitlynm/mosquito_model/input/",hu_num),row.names = FALSE)
+ # write.csv(forcings_daily,paste0("/usr/projects/epiearth/users/kaitlynm/mosquito_model/input/",hu_num),row.names = FALSE)
    write.csv(forcings_daily,paste0("/lustre/scratch5/kaitlynm/mosquito_mod_data/input/",hu_num),row.names = FALSE)
 }
 

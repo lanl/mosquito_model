@@ -1,8 +1,8 @@
 ## Directories and Paths
 LOGFILE_PATH: 'logs/mosquito_model_logs.log' # (e.g., 'logs/mosquito_model_logs.log')
-LOOKUP_PATH: '/projects/cimmid/users/kaitlynm/mosquito-pbm-local/input-data/mosq_pbm_hu_parameter_lookup.csv'
-MODEL_OUTPUT_DIR: '/projects/cimmid/users/kaitlynm/mosquito-pbm-local/output-data/'
-EXT_DATA_DIR: '/projects/cimmid/users/kaitlynm/mosquito-pbm-local/input-data/hu-inputs/'
+LOOKUP_PATH: '/projects/epiearth/users/kaitlynm/mosquito-pbm-local/input-data/mosq_pbm_hu_parameter_lookup.csv'
+MODEL_OUTPUT_DIR: '/projects/epiearth/users/kaitlynm/mosquito-pbm-local/output-data/'
+EXT_DATA_DIR: '/projects/epiearth/users/kaitlynm/mosquito-pbm-local/input-data/hu-inputs/'
 MOSQ_DATA_PATH: NULL
 
 ## Model Set up Parameters/Information

@@ -2,17 +2,17 @@
 Home of the Mosquito PBM set up for the integration workflow.  
 
 ## Running the model (single location_id run) 
-If the conda environment (mosq-R) is set up in the `cimmid/miniconda3/` folder, you do not need to re-set up this environment. *If this is the first time running the model you will need to set up the conda environment. **See instructions below***
+If the conda environment (mosq-R) is set up in the `epiearth/miniconda3/` folder, you do not need to re-set up this environment. *If this is the first time running the model you will need to set up the conda environment. **See instructions below***
 
 The basic comands to run the model are: 
 ```
-conda activate /projects/cimmid/miniconda3/envs/mosq-R
+conda activate /projects/epiearth/miniconda3/envs/mosq-R
 bash run_mosq_toy.sh path_to_config_file location_id
 ```
 
 The `path_to_config_file` can be a relative or absolute path. `location_id` should be a number matching one row of the look up table and one environmental data file. 
 
-Currently the model is set up to run locally on the master branch at `/projects/cimmid/users/kaitlynm/mosquito-toy-model`. The config file to use is `config/mosq_config_integration_default.yaml`. Additionally the lookup table and the environmental input-data is stored at `/projects/cimmid/users/kaitlynm/mosquito-pbm-local/input-data`. 
+Currently the model is set up to run locally on the master branch at `/projects/epiearth/users/kaitlynm/mosquito-toy-model`. The config file to use is `config/mosq_config_integration_default.yaml`. Additionally the lookup table and the environmental input-data is stored at `/projects/epiearth/users/kaitlynm/mosquito-pbm-local/input-data`. 
 
 An example run looks like: 
 ```
@@ -39,9 +39,9 @@ The template batch files currently points to the configuration file `mosq_config
 Run `sbatch -J <experiment_name> mosquitoPopSubmission_<experiment_name>.sh` from the mosquito_pop model directory to run the model.
 
 ## Setting up the virtual environment 
-With a miniconda3 instance already set up in the `/projects/cimmid/` folder all that needs to be done is setting up the mosquito model environment. For further details on setting up the miniconda3 installation, there will be forthcoming instructions provided by the infrastructure team. 
+With a miniconda3 instance already set up in the `/projects/epiearth/` folder all that needs to be done is setting up the mosquito model environment. For further details on setting up the miniconda3 installation, there will be forthcoming instructions provided by the infrastructure team. 
 
-In the `/projects/cimmid/miniconda3/` folder run 
+In the `/projects/epiearth/miniconda3/` folder run 
 ```Bash
 conda create --name mosq-R python=3.8
 ```
@@ -50,7 +50,7 @@ Even though we are setting up an R environment we need to install a python versi
 
 Activate the `mosq-R` environment to continue installing packages
 ```
-conda activate /projects/cimmid/miniconda3/envs/mosq-R
+conda activate /projects/epiearth/miniconda3/envs/mosq-R
 ``` 
 You should see something like this in your terminal 
 ```

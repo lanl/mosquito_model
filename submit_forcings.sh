@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -A y23_cimmid
+#SBATCH -A y23_epiearth
 ##SBATCH -J run100.log
 #SBATCH --output=run2.out
 #SBATCH -N 1
@@ -10,8 +10,8 @@
 
 module load python
 
-export PATH="/usr/projects/cimmid/miniconda3/bin:$PATH"
-conda config --prepend envs_dirs "/usr/projects/cimmid/miniconda3/envs"
+export PATH="/usr/projects/epiearth/miniconda3/bin:$PATH"
+conda config --prepend envs_dirs "/usr/projects/epiearth/miniconda3/envs"
 conda init bash
 source ~/.bashrc
 conda activate mosq-R
